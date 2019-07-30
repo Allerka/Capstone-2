@@ -3,14 +3,13 @@ package co.grandcircus;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Task {
 
 	static Scanner scan = new Scanner(System.in);
 	LocalDate ld;
-	boolean complete;
+	String complete;
 	String description;
 	String memberName;
 	String dateInput;
@@ -23,8 +22,9 @@ public class Task {
 		return;
 	}
 
-	public Task(int i, boolean complete, String memberName, LocalDate ld, String description) {
+	public Task(int i, String complete, String memberName, LocalDate ld, String description) {
 		this.i = i;
+		this.complete = "false";
 		this.memberName = memberName;
 		this.description = description;
 		this.ld = ld;
@@ -35,7 +35,7 @@ public class Task {
 		description = Validator.getStringMatchingRegex(scan, "\nTask description: ", ".{1,50}");
 		ld = dateInput(dateInput);
 		i++;
-		Task newTask = new Task(i, false, memberName, ld, description);
+		Task newTask = new Task(i, complete, memberName, ld, description);
 		taskList.add(newTask);
 		return;
 	}
@@ -87,12 +87,12 @@ public class Task {
 		if (confirm.equalsIgnoreCase("y")) {
 			taskNumber--;
 			taskList.get(taskNumber);
-			Task newTask = new Task(i, true, memberName, ld, description);
+			Task newTask = new Task(i, complete, memberName, ld, description);
+			newTask.complete = "true";
 			taskList.remove(taskNumber);
 			taskList.add(taskNumber, newTask);
 		}
 		confirm = "n";
 		return taskList;
 	}
-
 }
